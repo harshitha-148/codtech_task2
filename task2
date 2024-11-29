@@ -1,0 +1,85 @@
+class StudentGrades:
+    def __init__(self, student_name):  # Corrected __init__
+        self.student_name = student_name
+        self.grades = {}
+
+    def add_grade(self, subject, grade):
+        self.grades[subject] = grade
+
+    def calculate_average(self):
+        if not self.grades:
+            return 0
+        return sum(self.grades.values()) / len(self.grades)
+
+    def determine_letter_grade(self, average):
+        if average >= 90:
+            return "A"
+        elif average >= 80:
+            return "B"
+        elif average >= 70:
+            return "C"
+        elif average >= 60:
+            return "D"
+        else:
+            return "F"
+
+    def determine_gpa(self, average):
+        if average >= 90:
+            return 4.0
+        elif average >= 80:
+            return 3.0
+        elif average >= 70:
+            return 2.0
+        elif average >= 60:
+            return 1.0
+        else:
+            return 0.0
+
+    def display_summary(self):
+        average = self.calculate_average()
+        letter_grade = self.determine_letter_grade(average)
+        gpa = self.determine_gpa(average)
+
+        print("\nStudent Name:", self.student_name)
+        print("Grades:")
+        for subject, grade in self.grades.items():
+            print(f"  {subject}: {grade}")
+        print(f"Average Grade: {average:.2f}")
+        print(f"Letter Grade: {letter_grade}")
+        print(f"GPA: {gpa:.2f}")
+
+
+# Main Program
+def main():
+    print("Student Grades Tracker")
+    student_name = input("Enter the student's name: ")
+    student = StudentGrades(student_name)
+
+    while True:
+        print("\nOptions:")
+        print("1. Add a grade")
+        print("2. Display summary")
+        print("3. Exit")
+
+        choice = input("Choose an option (1/2/3): ")
+        if choice == "1":
+            subject = input("Enter the subject name: ")
+            try:
+                grade = float(input(f"Enter the grade for {subject} (0-100): "))
+                if 0 <= grade <= 100:
+                    student.add_grade(subject, grade)
+                else:
+                    print("Grade must be between 0 and 100.")
+            except ValueError:
+                print("Invalid input. Please enter a numeric grade.")
+        elif choice == "2":
+            student.display_summary()
+        elif choice == "3":
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("Invalid option. Please try again.")
+
+
+if __name__ == "__main__":  # Corrected __name__ and __main__
+    main()
